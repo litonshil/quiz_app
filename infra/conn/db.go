@@ -40,3 +40,8 @@ func ConnectDb() {
 func Db() *mongo.Client {
 	return db
 }
+
+func GetCollection(client *mongo.Client, collectionName string) *mongo.Collection {
+	collection := client.Database("test").Collection(collectionName)
+	return collection
+}

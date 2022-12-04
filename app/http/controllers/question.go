@@ -37,3 +37,21 @@ func (bc *QuestionCnt) InsertQuestion(c echo.Context) error {
 
 	return c.NoContent(http.StatusCreated)
 }
+
+func (bc *QuestionCnt) GetQuestion(c echo.Context) error {
+	res, err := bc.questionSvc.GetQuestion()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, msgutil.EntityCreationFailedMsg("Question"))
+	}
+
+	return c.JSON(http.StatusOK, res)
+}
+
+func (bc *QuestionCnt) GetQuiz(c echo.Context) error {
+	res, err := bc.questionSvc.GetQuiz()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, msgutil.EntityCreationFailedMsg("Question"))
+	}
+
+	return c.JSON(http.StatusOK, res)
+}

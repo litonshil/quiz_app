@@ -9,4 +9,6 @@ import (
 func Init(e *echo.Echo, bc *controllers.QuestionCnt) {
 	// Question
 	e.POST("/question", bc.InsertQuestion)
+	e.GET("/question", bc.GetQuestion)
+	e.GET("/quiz", bc.GetQuiz)
 }
