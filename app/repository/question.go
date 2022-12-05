@@ -2,8 +2,10 @@ package repository
 
 import (
 	"context"
+	"log"
 	"quiz_app/app/domain"
 	"quiz_app/app/models"
+	"strings"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -70,6 +72,18 @@ func (cr *questions) GetQuestion() ([]models.Question, error) {
 	}
 	return questions, nil
 }
+func MongoPipeline(str string) mongo.Pipeline {
+	var pipeline = []bson.D{}
+	str = strings.TrimSpace(str)
+	if strings.Index(str, "[") != 0 {
+		var doc bson.D
+		bson.UnmarshalExtJSON([]byte(str), false, &doc)
+		pipeline = append(pipeline, doc)
+	} else {
+		bson.UnmarshalExtJSON([]byte(str), false, &pipeline)
+	}
+	return pipeline
+}
 
 func (cr *questions) GetQuiz() ([]models.Question, error) {
 
@@ -79,21 +93,16 @@ func (cr *questions) GetQuiz() ([]models.Question, error) {
 
 	questions := []models.Question{}
 
-	// collection.Aggregate()
+	groupStage := []bson.D{bson.D{{"$sample", bson.D{{"size", 2}}}}}
 
-	// if err != nil {
-	// 	return nil, err
-	// }
+	res, err := collection.Aggregate(ctx, mongo.Pipeline(groupStage))
 
-	// //reading from the db in an optimal way
-	// defer results.Close(ctx)
-	// for results.Next(ctx) {
-	// 	var singleQuestion models.Question
-	// 	if err = results.Decode(&singleQuestion); err != nil {
-	// 		return nil, err
-	// 	}
+	if err != nil {
+		return nil, err
+	}
 
-	// 	questions = append(questions, singleQuestion)
-	// }
+	if err = res.All(ctx, &questions); err != nil {
+		log.Fatal(err)
+	}
 	return questions, nil
 }
