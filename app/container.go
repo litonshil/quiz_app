@@ -15,11 +15,14 @@ func Init(e *echo.Echo) {
 	db := conn.Db()
 
 	questionRepo := repo.NewQuestionRepository(db)
+	quizRepo := repo.NewQuizRepository(db)
 
 	questionSvc := svc.NewQuestionService(questionRepo)
+	quizSvc := svc.NewQuizService(quizRepo)
 
 	questionCr := controllers.NewQuestionController(questionSvc)
+	quizCr := controllers.NewQuizController(quizSvc)
 
-	routes.Init(e, questionCr)
+	routes.Init(e, questionCr, quizCr)
 
 }

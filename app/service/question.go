@@ -43,14 +43,3 @@ func (cs *questions) GetQuestion() ([]models.Question, error) {
 
 	return res, nil
 }
-
-func (cs *questions) GetQuiz() ([]models.Question, error) {
-	var res []models.Question
-	var err error
-	if res, err = cs.questionRepo.GetQuiz(); err != nil {
-		logger.Error(err)
-		return nil, errutil.ErrQuestionCreate
-	}
-
-	return res, nil
-}

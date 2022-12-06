@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"log"
 	"quiz_app/app/domain"
 	"quiz_app/app/models"
 	"strings"
@@ -83,26 +82,4 @@ func MongoPipeline(str string) mongo.Pipeline {
 		bson.UnmarshalExtJSON([]byte(str), false, &pipeline)
 	}
 	return pipeline
-}
-
-func (cr *questions) GetQuiz() ([]models.Question, error) {
-
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-
-	collection := cr.DB.Database("test").Collection("question")
-
-	questions := []models.Question{}
-
-	groupStage := []bson.D{bson.D{{"$sample", bson.D{{"size", 2}}}}}
-
-	res, err := collection.Aggregate(ctx, mongo.Pipeline(groupStage))
-
-	if err != nil {
-		return nil, err
-	}
-
-	if err = res.All(ctx, &questions); err != nil {
-		log.Fatal(err)
-	}
-	return questions, nil
 }

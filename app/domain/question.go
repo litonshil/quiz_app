@@ -8,11 +8,9 @@ import (
 type IQuestionRepo interface {
 	InsertQuestion(req *models.Question) error
 	GetQuestion() ([]models.Question, error)
-	GetQuiz() ([]models.Question, error)
 }
 
 type IQuestionSvc interface {
 	InsertQuestion(payload *serializers.QuestionPayload) error
 	GetQuestion() ([]models.Question, error)
-	GetQuiz() ([]models.Question, error)
 }
