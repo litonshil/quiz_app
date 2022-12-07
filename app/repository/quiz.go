@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"log"
+	"net/http"
 	"quiz_app/app/domain"
 	"quiz_app/app/models"
 	"quiz_app/app/serializers"
@@ -76,6 +77,7 @@ func (cr *quizes) SubmitQuiz(req *models.Quiz, response *serializers.SubmitQuizR
 	response.Data = serializers.AnswerData{
 		Number: float64(number),
 	}
+	response.Status = http.StatusOK
 
 	return nil
 }

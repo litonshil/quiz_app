@@ -7,10 +7,9 @@ type QuizPayload struct {
 }
 
 type SubmitQuizResponse struct {
-	Status  int         `json:"status"`
-	Message string      `json:"message"`
-	IsPass  bool        `json:"is_pass"`
-	Data    interface{} `json:"data"`
+	Status int         `json:"status"`
+	IsPass bool        `json:"is_pass"`
+	Data   interface{} `json:"data"`
 }
 
 type AnswerObj struct {
