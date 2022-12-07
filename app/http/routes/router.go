@@ -13,5 +13,5 @@ func Init(e *echo.Echo, bc *controllers.QuestionCnt, quizCr *controllers.QuizCnt
 
 	//Quiz
 	e.GET("/quiz", quizCr.GetQuiz)
-	// e.POST("/quiz", bc.SubmitQuiz)
+	e.POST("/quiz", quizCr.SubmitQuiz)
 }

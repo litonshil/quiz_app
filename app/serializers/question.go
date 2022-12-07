@@ -13,3 +13,9 @@ type QuestionPayload struct {
 	Image       *string            `json:"image,omitempty"`
 	Author      int                `json:"author,omitempty"`
 }
+
+type InsertQuestionRespose struct {
+	Status  int         `json:"status"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}

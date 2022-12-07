@@ -4,7 +4,6 @@ import (
 	"context"
 	"quiz_app/app/domain"
 	"quiz_app/app/models"
-	"strings"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -70,16 +69,4 @@ func (cr *questions) GetQuestion() ([]models.Question, error) {
 		questions = append(questions, singleQuestion)
 	}
 	return questions, nil
-}
-func MongoPipeline(str string) mongo.Pipeline {
-	var pipeline = []bson.D{}
-	str = strings.TrimSpace(str)
-	if strings.Index(str, "[") != 0 {
-		var doc bson.D
-		bson.UnmarshalExtJSON([]byte(str), false, &doc)
-		pipeline = append(pipeline, doc)
-	} else {
-		bson.UnmarshalExtJSON([]byte(str), false, &pipeline)
-	}
-	return pipeline
 }
